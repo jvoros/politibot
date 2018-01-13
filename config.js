@@ -20,4 +20,20 @@ module.exports = {
   rogerrogerbot: {
     id: e.RR_ID,
   },
+  miaworks4utah: {
+    id: e.ML_ID,
+    consumer_key: e.ML_CONSUMER_KEY,
+    consumer_secret: e.ML_CONSUMER_SECRET,
+    access_token: e.ML_ACCESS_TOKEN,
+    access_token_secret: e.ML_ACCESS_TOKEN_SECRET,
+  },
+  textrazor: {
+    api_key: e.TEXTRAZOR_API_KEY,
+  },
+  twoheadlines: {
+    id: 1705052335,
+  },
+  googlefacts: {
+    id: 559675462,
+  }
 };

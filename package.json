@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run start:frontail && npm run start:bot",
-    "start:bot": "pm2 start index.js --name='mialovebot' --log='./app.log' --merge-logs",
-    "stop:bot": "pm2 delete mialovebot",
-    "start:frontail": "frontail app.log -d",
+    "start": "npm run start:frontail && npm run start:bot && pm2 logs",
+    "start:bot": "pm2 start pm2.config.json --env production",
+    "stop:bot": "pm2 delete pm2.config.json",
+    "start:frontail": "frontail app.log -d --pid-path frontail.pid",
+    "frontail": "frontail app.log",
     "logs": "pm2 logs",
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "dockerbuild": "docker build --tag jvoros/mialovebot-alpha .",
+    "dockerrun": "docker run -d -p 9001:9001 --name mialovebot-alpha jvoros/mialovebot-alpha"
   },
   "author": "",
   "license": "ISC",

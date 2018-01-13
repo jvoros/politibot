@@ -1,0 +1,16 @@
+{
+  "apps" : [{
+    "name"        : "mialovebot",
+    "script"      : "./index.js",
+    "watch"       : false,
+    "merge_logs"  : true,
+    "error_file"  : "./app.log",
+    "out_file"    : "./app.log",
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production" : {
+       "NODE_ENV": "production"
+    }
+  }]
+}
