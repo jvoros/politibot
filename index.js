@@ -4,7 +4,7 @@ const config = require('./config');
 const scubbles = new Bot('scubbles', config.scubblesbot);
 const utahroger = new Bot('utahroger', config.utahroger);
 
-utahroger.streamTweeterTweets(config.twoheadlines.id, (tweet) => {
+utahroger.streamTweeterTweets(`${config.twoheadlines.id}`, (tweet) => {
   scubbles.oldSchoolRetweet(tweet) 
 });
 

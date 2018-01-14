@@ -61,8 +61,10 @@ class Bot {
   streamTweeterTweets(ids, callback) {
     const stream = this.twit.stream('statuses/filter', { follow: ids, tweet_mode: 'extended' });
     stream.on('tweet', (tweet) => {
+      console.log(`>>> Tweet received (${this.name}): ${tweet.created_at}`);
+      console.log('ids: ', ids);
+      console.log('tweet.user.id', tweet.user.id);
       if (ids.split(',').includes(tweet.user.id)) {
-        console.log(`>>> Tweet received (${this.name}): ${tweet.created_at}`);
         callback(tweet);
       }
     });

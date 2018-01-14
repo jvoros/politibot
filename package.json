@@ -12,7 +12,7 @@
     "logs": "pm2 logs",
     "dev": "node index.js",
     "dockerbuild": "docker build --tag jvoros/mialovebot-alpha .",
-    "dockerrun": "docker run -d -p 9001:9001 --name mialovebot-alpha jvoros/mialovebot-alpha"
+    "dockerrun": "docker run -d -p 80:9001 --name mialovebot-alpha jvoros/mialovebot-alpha"
   },
   "author": "",
   "license": "ISC",
