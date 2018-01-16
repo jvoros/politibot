@@ -34,6 +34,34 @@ class Bot {
 
   // THE BUSINESS
 
+  // Utility funx
+
+  getUsersIdsString(users, callback) {
+    const users_array = Array.isArray(users) ? users : [users];
+    this.twit.get('users/lookup', { screen_name: users_array.join() }, (err, data) => {
+      if (err) {
+        console.log(`--- ERROR (${this.name})`, err);
+        callback(err);
+      }
+      callback(null, data.map(u => u.id_str).join());
+    });
+  }
+
+  startStream(endpoint, params, callback) {
+    this.stream = this.twit.stream(endpoint, params, callback);
+    this.stream.on('tweet', (tweet) => {
+      console.log(`>>> Tweet received (${this.name}): ${tweet.created_at} by @${tweet.screen_name}`);
+      callback(tweet);
+    });
+    this.stream.on('connect', () => {
+      console.log(`::: Stream connected (${this.name})`);
+    });
+    this.stream.on('reconnect', this.streamReconnect.bind(this));
+    this.stream.on('error', this.streamError.bind(this));
+  }
+
+  // Tweeting funx
+
   tweet(status) {
     if (typeof status !== 'string') {
       return callback(new Error('tweet must be of type String'));
@@ -58,18 +86,13 @@ class Bot {
     return this.tweet(`${rt_slug}${new_status}`);
   }
 
-  streamTweeterTweets(ids, callback) {
-    const stream = this.twit.stream('statuses/filter', { follow: ids, tweet_mode: 'extended' });
-    stream.on('tweet', (tweet) => {
-      console.log(`>>> Tweet received (${this.name}): ${tweet.created_at}`);
-      console.log('ids: ', ids);
-      console.log('tweet.user.id', tweet.user.id);
-      if (ids.split(',').includes(tweet.user.id)) {
-        callback(tweet);
-      }
+  // React to users' funx
+
+  streamTweeterTweets(screen_names, callback) {
+    const follow_ids = this.getUsersIdsString(screen_names, (err, ids) => {
+      if (err) return;
+      const stream = this.startStream('statuses/filter', { follow: ids, tweet_mode: 'extended' }, callback);
     });
-    stream.on('reconnect', this.streamReconnect.bind(this));
-    stream.on('error', this.streamError.bind(this));
   }
 
   getSomeTweetersTweets(screen_name, options, callback) {

@@ -11,6 +11,9 @@
     "frontail": "frontail app.log",
     "logs": "pm2 logs",
     "dev": "node index.js",
+    "dockerreup": "npm run dockerdown && npm run dockerup",
+    "dockerdown": "docker stop mialovebot-alpha && docker rm mialovebot-alpha",
+    "dockerup": "npm run dockerbuild && npm run dockerrun",
     "dockerbuild": "docker build --tag jvoros/mialovebot-alpha .",
     "dockerrun": "docker run -d -p 80:9001 --name mialovebot-alpha jvoros/mialovebot-alpha"
   },
