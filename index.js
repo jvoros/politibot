@@ -6,9 +6,9 @@ const utahroger = new Bot('utahroger', config.utahroger);
 
 
 // testing bots
-scubbles.streamTweeterTweets('rogerrogerbot', (tweet) => {
-  console.log(tweet);
-});
+// scubbles.streamTweeterTweets('rogerrogerbot', (tweet) => {
+//   console.log(tweet);
+// });
 
 //scubbles.getUsersIds(['scubblesbot', 'utahroger']).then((x) => console.log(x));
 
@@ -18,8 +18,8 @@ scubbles.streamTweeterTweets('rogerrogerbot', (tweet) => {
 // });
 
 // working bots
-// utahroger.streamTweeterTweets(config.twoheadlines.id, (tweet) => {
-//   scubbles.oldSchoolRetweet(tweet) 
-// });
+utahroger.streamTweeterTweets('twoheadlines', (tweet) => {
+  scubbles.oldSchoolRetweet(tweet) 
+});
 
 
