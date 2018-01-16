@@ -22,16 +22,6 @@ class Bot {
     return data;
   }
 
-  streamReconnect(request, response, connectInterval) {
-    console.log(`xxx Reconnect Request (${this.name}):`, request);
-    console.log(`xxx Reconnect Response (${this.name}):`, response);
-    console.log(`xxx Reconnect Interval (${this.name}):`, connectInterval);
-  }
-
-  streamError(err) {
-    console.log(`--- ERROR (${this.name}) stream: `, err);
-  }
-
   // THE BUSINESS
 
   // Utility funx
@@ -56,8 +46,16 @@ class Bot {
     this.stream.on('connect', () => {
       console.log(`::: Stream connected (${this.name})`);
     });
-    this.stream.on('reconnect', this.streamReconnect.bind(this));
-    this.stream.on('error', this.streamError.bind(this));
+    
+    this.stream.on('reconnect', (request, response, connectInterval) => {
+      console.log(`xxx Reconnect Request (${this.name}):`, request);
+      console.log(`xxx Reconnect Response (${this.name}):`, response);
+      console.log(`xxx Reconnect Interval (${this.name}):`, connectInterval);
+    });
+    
+    this.stream.on('error', (err) => {
+      console.log(`--- ERROR (${this.name}) stream: `, err);
+    });
   }
 
   // Tweeting funx
@@ -91,7 +89,10 @@ class Bot {
   streamTweeterTweets(screen_names, callback) {
     const follow_ids = this.getUsersIdsString(screen_names, (err, ids) => {
       if (err) return;
-      const stream = this.startStream('statuses/filter', { follow: ids, tweet_mode: 'extended' }, callback);
+      const stream = this.startStream('statuses/filter', { follow: ids, tweet_mode: 'extended' }, (tweet) => {
+        // only send tweets by user, not replies or RT by other users
+        if (ids.split(',').includes(tweet.user.id_str)) callback(tweet);
+      });
     });
   }
 
