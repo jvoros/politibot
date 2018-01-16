@@ -1,8 +1,8 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 const e = process.env;
 
-module.exports = {
+export default {
   scubblesbot: {
     id: e.ID,
     consumer_key: e.CONSUMER_KEY,

@@ -1,7 +1,27 @@
-const Twit = require('twit');
+import * as Twit from 'twit';
+import { IncomingMessage } from 'http';
 
-class Bot {
-  constructor(name, botconfig) {
+interface ExtendedTweet extends Twit.Twitter.Status {
+  extended_tweet?: {
+    full_text: string,
+  }
+}
+
+interface GetUsersIdsStringCallback {
+  (err: Error, ids: string): void;
+}
+
+interface StreamCallback {
+  (tweet: Twit.Twitter.Status): void;
+}
+
+export default class Bot {
+  
+  name: string;
+  twit: Twit;
+  stream: Twit.Stream;
+
+  constructor(name: string, botconfig: Twit.Options) {
     this.name = name;
     this.twit = new Twit(botconfig);
     console.log('STARTING UP:', this.name);
@@ -9,11 +29,12 @@ class Bot {
 
   // HELPERS
 
-  extractStatus(tweet) {
+  extractStatus(tweet: ExtendedTweet) {
     return tweet.truncated === true ? tweet.extended_tweet.full_text : tweet.text;
   }
 
-  tweetCallback(err, data) {
+
+  tweetCallback(err: Error, data: Twit.Response) {
     if (err) {
       console.log(`--- ERROR (${this.name})`, err);
       return null;
@@ -26,19 +47,20 @@ class Bot {
 
   // Utility funx
 
-  getUsersIdsString(users, callback) {
+  getUsersIdsString(users: Array<string>, callback: GetUsersIdsStringCallback) {
     const users_array = Array.isArray(users) ? users : [users];
-    this.twit.get('users/lookup', { screen_name: users_array.join() }, (err, data) => {
-      if (err) {
-        console.log(`--- ERROR (${this.name})`, err);
-        callback(err);
-      }
-      callback(null, data.map(u => u.id_str).join());
-    });
+    this.twit.get('users/lookup', { screen_name: users_array.join() }, 
+      (err: Error, data: Array<Twit.Twitter.User>, response: IncomingMessage) => {
+        if (err) {
+          console.log(`--- ERROR (${this.name})`, err);
+          callback(err, null);
+        }
+        callback(err, data.map(u => u.id_str).join());
+      });
   }
 
-  startStream(endpoint, params, callback) {
-    this.stream = this.twit.stream(endpoint, params, callback);
+  startStream(endpoint: Twit.StreamEndpoint, params: Twit.Params, callback: StreamCallback) {
+    this.stream = this.twit.stream(endpoint, params);
     this.stream.on('tweet', (tweet) => {
       console.log(`>>> Tweet received (${this.name}): ${tweet.created_at} by @${tweet.screen_name}`);
       callback(tweet);
@@ -105,5 +127,3 @@ class Bot {
   }
 
 }
-
-module.exports = Bot;

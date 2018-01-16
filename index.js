@@ -1,7 +1,9 @@
-const Bot = require('./src/Bot');
-const config = require('./config');
+require('./dist/main');
 
-const scubbles = new Bot('scubbles', config.scubblesbot);
+// const Bot = require('./src/Bot');
+// const config = require('./config');
+
+// const scubbles = new Bot('scubbles', config.scubblesbot);
 //const utahroger = new Bot('utahroger', config.utahroger);
 
 
