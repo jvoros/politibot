@@ -2,7 +2,7 @@ const Bot = require('./src/Bot');
 const config = require('./config');
 
 const scubbles = new Bot('scubbles', config.scubblesbot);
-const utahroger = new Bot('utahroger', config.utahroger);
+//const utahroger = new Bot('utahroger', config.utahroger);
 
 
 // testing bots
@@ -18,8 +18,8 @@ const utahroger = new Bot('utahroger', config.utahroger);
 // });
 
 // working bots
-utahroger.streamTweeterTweets('twoheadlines', (tweet) => {
-  scubbles.oldSchoolRetweet(tweet) 
-});
+// utahroger.streamTweeterTweets('twoheadlines', (tweet) => {
+//   scubbles.oldSchoolRetweet(tweet) 
+// });
 
 

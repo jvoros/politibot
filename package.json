@@ -1,15 +1,13 @@
 {
   "name": "mialovebot",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A Twitter bot team trying to remind elected officials who they work for.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run start:frontail && npm run start:bot && pm2 logs",
+    "start": "npm run frontail && npm run start:bot && pm2 logs",
     "start:bot": "pm2 start pm2.config.json --env production",
     "stop:bot": "pm2 delete pm2.config.json",
-    "start:frontail": "frontail app.log -d --pid-path frontail.pid",
-    "frontail": "frontail app.log",
-    "logs": "pm2 logs",
+    "frontail": "frontail app.log -d --pid-path frontail.pid",
     "dev": "node index.js",
     "dockerreup": "npm run dockerdown && npm run dockerup",
     "dockerdown": "docker stop mialovebot-alpha && docker rm mialovebot-alpha",
@@ -17,7 +15,7 @@
     "dockerbuild": "docker build --tag jvoros/mialovebot-alpha .",
     "dockerrun": "docker run -d -p 80:9001 --name mialovebot-alpha jvoros/mialovebot-alpha"
   },
-  "author": "",
+  "author": "Jeremy Voros",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^4.0.0",
