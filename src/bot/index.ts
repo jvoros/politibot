@@ -1,21 +1,8 @@
 import * as Twit from 'twit';
+import * as IBot from './types';
 import { IncomingMessage } from 'http';
 
-interface ExtendedTweet extends Twit.Twitter.Status {
-  extended_tweet?: {
-    full_text: string,
-  }
-}
-
-interface GetUsersIdsStringCallback {
-  (err: Error, ids: string): void;
-}
-
-interface StreamCallback {
-  (tweet: Twit.Twitter.Status): void;
-}
-
-export default class Bot {
+export default class {
   
   name: string;
   twit: Twit;
@@ -29,10 +16,9 @@ export default class Bot {
 
   // HELPERS
 
-  extractStatus(tweet: ExtendedTweet) {
+  extractStatus(tweet: IBot.ExtendedTweet) {
     return tweet.truncated === true ? tweet.extended_tweet.full_text : tweet.text;
   }
-
 
   tweetCallback(err: Error, data: Twit.Response) {
     if (err) {
@@ -45,9 +31,9 @@ export default class Bot {
 
   // THE BUSINESS
 
-  // Utility funx
+  // Utility Funx
 
-  getUsersIdsString(users: Array<string>, callback: GetUsersIdsStringCallback) {
+  getUsersIdsString(users: Array<string>, callback: IBot.GetUsersIdsStringCallback) {
     const users_array = Array.isArray(users) ? users : [users];
     this.twit.get('users/lookup', { screen_name: users_array.join() }, 
       (err: Error, data: Array<Twit.Twitter.User>, response: IncomingMessage) => {
@@ -59,7 +45,7 @@ export default class Bot {
       });
   }
 
-  startStream(endpoint: Twit.StreamEndpoint, params: Twit.Params, callback: StreamCallback) {
+  startStream(endpoint: Twit.StreamEndpoint, params: IBot.StreamParams, callback: IBot.StreamCallback) {
     this.stream = this.twit.stream(endpoint, params);
     this.stream.on('tweet', (tweet) => {
       console.log(`>>> Tweet received (${this.name}): ${tweet.created_at} by @${tweet.screen_name}`);
@@ -80,18 +66,16 @@ export default class Bot {
     });
   }
 
-  // Tweeting funx
+  // Tweeting Funx
 
-  tweet(status) {
-    if (typeof status !== 'string') {
-      return callback(new Error('tweet must be of type String'));
-    } else if(status.length > 280) {
-      return callback(new Error('tweet is too long: ' + status.length));
+  tweet(status: string): IBot.Callback {
+    if(status.length > 280) {
+      return this.tweetCallback(new Error('tweet is too long: ' + status.length), null);
     }
     this.twit.post('statuses/update', { status: status }, this.tweetCallback.bind(this));
   };
 
-  oldSchoolRetweet(tweet) {
+  oldSchoolRetweet(tweet: Twit.Twitter.Status): IBot.Callback {
     const rt_slug = `RT @${tweet.user.screen_name}: `
     const status = this.extractStatus(tweet);
     const overage = status.length-(280-rt_slug.length);
@@ -106,9 +90,9 @@ export default class Bot {
     return this.tweet(`${rt_slug}${new_status}`);
   }
 
-  // React to users' funx
+  // React to Users Funx
 
-  streamTweeterTweets(screen_names, callback) {
+  streamTweeterTweets(screen_names: Array<string>, callback: IBot.StreamCallback) {
     const follow_ids = this.getUsersIdsString(screen_names, (err, ids) => {
       if (err) return;
       const stream = this.startStream('statuses/filter', { follow: ids, tweet_mode: 'extended' }, (tweet) => {
