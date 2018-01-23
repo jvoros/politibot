@@ -11,7 +11,7 @@
     "tsc": "tsc",
     "dev": "npm run tsc && node index.js",
     "dockerreup": "npm run dockerdown && npm run dockerup",
-    "dockerdown": "docker stop mialovebot-alpha && docker rm mialovebot-alpha",
+    "dockerdown": "docker stop politibot-alpha && docker rm politibot-alpha",
     "dockerup": "npm run dockerbuild && npm run dockerrun",
     "dockerbuild": "docker build --tag jvoros/mialovebot-alpha .",
     "dockerrun": "docker run -d -p 80:9001 --name mialovebot-alpha jvoros/mialovebot-alpha"
