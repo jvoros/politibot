@@ -30,10 +30,7 @@ export default {
   textrazor: {
     api_key: e.TEXTRAZOR_API_KEY,
   },
-  twoheadlines: {
-    id: 1705052335,
-  },
-  googlefacts: {
-    id: 559675462,
+  paralleldots: {
+    api_key: e.PARALLELDOTS_API_KEY,
   }
 };
