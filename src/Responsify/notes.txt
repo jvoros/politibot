@@ -1,0 +1,26 @@
+Azure tutorial:
+https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-keyword-extraction
+https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics.V2.0/operations/56f30ceeeda5650db055a3c6
+
+Text-Processing.com:
+http://text-processing.com/docs/stem.html
+
+Consider a store/reserve/dictionary object
+
+let brain = {
+  "immigration": [wall, border, immigration, immigrant, dream, dreamer, ],
+
+}
+
+const immigration = [
+  wall,
+  border,
+  immigration,
+  imigrant,
+  migrant,
+  dream,
+  dreamer,
+  DACA,
+  TPS,
+  
+]
