@@ -9,6 +9,7 @@
     "stop:bot": "pm2 delete pm2.config.json",
     "frontail": "frontail app.log -d --pid-path frontail.pid",
     "tsc": "tsc",
+    "test": "jest",
     "dev": "npm run tsc && node index.js",
     "dockerreup": "npm run dockerdown && npm run dockerup",
     "dockerdown": "docker stop politibot-alpha && docker rm politibot-alpha",
@@ -22,12 +23,35 @@
     "dotenv": "^4.0.0",
     "frontail": "^4.1.0",
     "pm2": "^2.9.1",
-    "twit": "^2.2.9"
+    "twit": "^2.2.9",
+    "unirest": "^0.5.1"
   },
   "devDependencies": {
+    "@types/jest": "^22.1.0",
     "@types/node": "^9.3.0",
     "@types/twit": "^2.2.10",
     "eslint": "^4.15.0",
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.1",
     "typescript": "^2.6.2"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "mapCoverage": true
   }
 }

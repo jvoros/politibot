@@ -1,5 +1,7 @@
-import Bot from './bot';
+import Bot from './Bot';
 import config from './config';
+import TopicTalker from './Responsify/TopicTalker';
+import { performance } from 'perf_hooks';
 
 const scubbles = new Bot('scubbles', config.scubblesbot);
 const utahroger = new Bot('utahroger', config.utahroger);
@@ -11,12 +13,45 @@ const utahroger = new Bot('utahroger', config.utahroger);
 
 //scubbles.getUsersIds(['scubblesbot', 'utahroger']).then((x) => console.log(x));
 
-scubbles.getSomeTweetersTweets('rogerrogerbot', { count: 10 }, (err, data, response) => {
-  data.forEach((tweet) => console.log(tweet.id));
-  console.log('newest tweet id: ', data[0].id);
-});
+// scubbles.getSomeTweetersTweets('rogerrogerbot', { count: 10 }, (err, data, response) => {
+//   data.forEach((tweet) => console.log(tweet.id));
+//   console.log('newest tweet id: ', data[0].id);
+// });
+
+const raw_tweet = "The quick brown fox jumps over the lazy dog";
+const x = new TopicTalker({raw: raw_tweet});
+x.fetchKeywords().then((a) => { console.log(a)});
 
 // working bots
 // utahroger.streamTweeterTweets('twoheadlines', (tweet) => {
 //   scubbles.oldSchoolRetweet(tweet) 
 // });
+
+
+// class testing {
+//   connection: Promise<string>;
+//   constructor() {
+//     this.connection = this.establishConnection();
+//   }
+
+//   establishConnection() {
+//     // simulate slow connection setup by initializing after 2 seconds
+//     return new Promise<string>(resolve => setTimeout(() => {
+//       resolve('connection established');
+//     }, 5000));
+//   }
+//   async doSomethingRemote(): Promise<string> {
+//     const x = await this.connection;
+//     console.log('doSomethingRemote says: ', x);
+//     return x;
+//   }
+// }
+
+// function promiseTime(start) {
+//   console.log('Execution time: ', (performance.now()-start)/1000);
+// }
+
+// const t0 = performance.now();
+// const x = new testing;
+// x.doSomethingRemote().then((x) => { promiseTime(t0); });
+// x.doSomethingRemote().then((x) => { promiseTime(t0); });

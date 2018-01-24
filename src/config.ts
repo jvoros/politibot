@@ -32,5 +32,8 @@ export default {
   },
   paralleldots: {
     api_key: e.PARALLELDOTS_API_KEY,
+  },
+  azure: {
+    api_key: e.AZURE_API_KEY,
   }
 };
