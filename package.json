@@ -1,5 +1,5 @@
 {
-  "name": "mialovebot",
+  "name": "PolitiBot",
   "version": "0.1.0",
   "description": "A Twitter bot team trying to remind elected officials who they work for.",
   "main": "index.js",

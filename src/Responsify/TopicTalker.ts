@@ -83,11 +83,11 @@ export default class {
     return null;
   }
 
-  public compatabilityScore(other_keywords: Stems): Promise<void | number> {
+  public compatabilityScore(other_stems: Stems): Promise<void | number> {
     // count number of overlaps between this.stems and input_stems
     let score: number = 0;
     return this.getStems().then((stems) => {
-      other_keywords.forEach((other) => {
+      other_stems.forEach((other) => {
         if(stems && stems.includes(other)) score++;
       });
       return score;
