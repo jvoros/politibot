@@ -21,15 +21,19 @@ export default class {
     this.keywords = params.keywords;
     this.responses = params.responses;
     this.raw = params.raw;
-    if (this.keywords) this.stems_promise = this.fetchStems(this.keywords).catch((err) => console.log('--- ERROR: ', err));
-    if (this.raw) {
+    
+    if (this.keywords) {
+      this.stems_promise = this.fetchStems(this.keywords).catch((err) => console.log('--- ERROR: ', err));
+    }
+
+    if (!this.keywords && this.raw) {
       this.stems_promise = this.fetchKeywords()
         .then(this.fetchStems)
         .catch((err) => console.log('--- ERROR: ', err));
     }
   }
 
-  public fetchKeywords(): Promise<string[]> {
+  private fetchKeywords(): Promise<string[]> {
     const body = {
       documents: [{
           language: 'en',
