@@ -1,8 +1,8 @@
 import Bot from './Bot';
 import config from './config';
-import Library from './Brain/Responsifier';
-import TopicTools from './Brain/TopicTools';
-import { performance } from 'perf_hooks';
+import * as Library from './Library';
+import Responsifier from './Brain/Responsifier';
+import Vectorizer from './Brain/Vectorizer'
 
 const scubbles = new Bot('scubbles', config.scubblesbot);
 const utahroger = new Bot('utahroger', config.utahroger);
@@ -19,41 +19,14 @@ const utahroger = new Bot('utahroger', config.utahroger);
 //   console.log('newest tweet id: ', data[0].id);
 // });
 
-// const raw_tweet = "The quick brown fox jumps over the lazy dog";
-//const x = new TopicTools({raw: raw_tweet});
-
-// console.log(Library());
-
 // working bots
 // utahroger.streamTweeterTweets('twoheadlines', (tweet) => {
 //   scubbles.oldSchoolRetweet(tweet) 
 // });
 
+const v = new Vectorizer(config.word2vectorModel.path);
+const r = new Responsifier(Library, v);
 
-// class testing {
-//   connection: Promise<string>;
-//   constructor() {
-//     this.connection = this.establishConnection();
-//   }
-
-//   establishConnection() {
-//     // simulate slow connection setup by initializing after 2 seconds
-//     return new Promise<string>(resolve => setTimeout(() => {
-//       resolve('connection established');
-//     }, 5000));
-//   }
-//   async doSomethingRemote(): Promise<string> {
-//     const x = await this.connection;
-//     console.log('doSomethingRemote says: ', x);
-//     return x;
-//   }
-// }
-
-// function promiseTime(start) {
-//   console.log('Execution time: ', (performance.now()-start)/1000);
-// }
-
-// const t0 = performance.now();
-// const x = new testing;
-// x.doSomethingRemote().then((x) => { promiseTime(t0); });
-// x.doSomethingRemote().then((x) => { promiseTime(t0); });
+r.response('Do you think Utah or BYU will win the game?')
+  .then((resp) => console.log(resp))
+  .catch(err => { console.log(err) });

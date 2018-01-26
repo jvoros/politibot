@@ -1,0 +1,81 @@
+import * as unirest from 'unirest';
+import Vectorizer from './Vectorizer';
+import config from '../config';
+
+interface Params {
+  keywords?: Promise<string[]>;
+  responses?: string[];
+  raw?: string;
+  w2v: Vectorizer;
+}
+
+export default class TopicTools {
+
+  keywords: Promise<string[]>;
+  responses: string[];
+  raw: string;
+  w2v: Vectorizer;
+
+  constructor(params: Params) {
+    this.keywords = params.keywords;
+    this.responses = params.responses;
+    this.raw = params.raw;
+    this.w2v = params.w2v;
+
+    if (!this.keywords && this.raw) {
+      this.keywords = this.fetchKeywords();
+    }
+  }
+
+  private fetchKeywords(): Promise<string[]> {
+    const body = {
+      documents: [{
+          language: 'en',
+          id: '1',
+          text: this.raw
+        }]
+    }
+
+    return new Promise<string[]>((resolve, reject) => {
+      unirest.post('https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases')
+      .headers({
+        'content-type': 'application/json',
+        'Ocp-Apim-Subscription-Key': config.azure.api_key
+      })
+      .send(JSON.stringify(body))
+      .end(resp => { 
+        if (resp.status === 200) {
+          resolve(resp.body.documents[0].keyPhrases.join(' ').split(' '));
+        } else {
+          reject(resp);
+        }
+      });
+    });
+  }
+
+  public getKeywords(): Promise<string[]> {
+    return this.keywords;
+  }
+
+  public getRandomResponse(): string | void {
+    if (this.responses) return this.responses[Math.floor(Math.random()*this.responses.length)];
+    return null;
+  }
+
+  public compatabilityScore(other_keys: string[]) {
+    this.getKeywords().then(word => {
+      return this.w2v.similarity()
+    })
+  }
+
+  // public compatabilityScore(other_stems: string[]): Promise<void | number> {
+  //   // count number of overlaps between this.stems and input_stems
+  //   let score: number = 0;
+  //   return this.getStems().then((stems) => {
+  //     other_stems.forEach((other) => {
+  //       if(stems && stems.includes(other)) score++;
+  //     });
+  //     return score;
+  //   });
+  // }
+}

@@ -24,7 +24,7 @@ export default class Vectorizer {
     return vecs.reduce((acc, cur) => w2v.add(acc, cur));
   }
 
-  public similarity(word1: string | number[], word2: string | number[]): number[] {
+  public similarity(word1: string | number[], word2: string | number[]): number {
     return w2v.similarity(word1, word2);
   }
 

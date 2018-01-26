@@ -1,1 +1,1 @@
-require('./dist/vector');
+require('./dist/main');

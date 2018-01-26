@@ -1,5 +1,3 @@
-import { TopicDef } from './_types';
-
 const keywords = [
   'taxes',
   'tax',
