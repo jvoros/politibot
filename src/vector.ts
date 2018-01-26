@@ -1,9 +1,10 @@
 import * as w2v from 'word2vector';
+import config from './config';
 
-const model_file = './wordvectors/GoogleNews-vectors-negative300-SLIM.bin';
+// const model_file = './wordvectors/GoogleNews-vectors-negative300-SLIM.bin';
 
 console.time('read');
-w2v.load(model_file);
+w2v.load(config.word2vectorModel.path);
 console.timeEnd('read');
 
 const empty_vec = w2v.substract(w2v.getVector('dog'),w2v.getVector('dog'));

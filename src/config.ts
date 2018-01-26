@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import * as path from 'path';
 
 const e = process.env;
 
@@ -27,13 +28,10 @@ export default {
     access_token: e.ML_ACCESS_TOKEN,
     access_token_secret: e.ML_ACCESS_TOKEN_SECRET,
   },
-  textrazor: {
-    api_key: e.TEXTRAZOR_API_KEY,
-  },
-  paralleldots: {
-    api_key: e.PARALLELDOTS_API_KEY,
-  },
   azure: {
     api_key: e.AZURE_API_KEY,
+  },
+  word2vectorModel: {
+    path: path.join(__dirname, '../wordvectors/GoogleNews-vectors-negative300-SLIM.bin')
   }
 };

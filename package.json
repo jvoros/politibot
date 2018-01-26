@@ -53,6 +53,7 @@
       "json",
       "node"
     ],
-    "mapCoverage": true
+    "mapCoverage": true,
+    "verbose": true
   }
 }
