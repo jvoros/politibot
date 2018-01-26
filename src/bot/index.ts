@@ -1,5 +1,5 @@
 import * as Twit from 'twit';
-import * as IBot from './types';
+import * as IBot from './_types';
 import { IncomingMessage } from 'http';
 
 export default class {

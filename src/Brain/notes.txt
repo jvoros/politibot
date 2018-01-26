@@ -24,3 +24,10 @@ const immigration = [
   TPS,
   
 ]
+
+NLP Tips
+https://stackoverflow.com/questions/22129943/how-to-calculate-the-sentence-similarity-using-word2vec-model-of-gensim-with-pyt
+https://www.npmjs.com/package/word2vec
+https://github.com/3Top/word2vec-api
+https://github.com/turbomaze/word2vecjson
+https://github.com/eyaler/word2vec-slim

@@ -24,7 +24,8 @@
     "frontail": "^4.1.0",
     "pm2": "^2.9.1",
     "twit": "^2.2.9",
-    "unirest": "^0.5.1"
+    "unirest": "^0.5.1",
+    "word2vector": "^2.0.0"
   },
   "devDependencies": {
     "@types/jest": "^22.1.0",

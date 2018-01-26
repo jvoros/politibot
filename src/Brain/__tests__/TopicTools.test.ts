@@ -1,6 +1,6 @@
-import TopicTalker from '../TopicTalker';
+import TopicTools from '../TopicTools';
 
-const testTalker = new TopicTalker({ 
+const testTalker = new TopicTools({ 
   keywords: ['one', 'running', 'celebrate'],
   responses: ['how are you?', 'what up, bro?']
 });
@@ -18,10 +18,10 @@ test('should get a random response', () => {
 });
 
 test('should turn raw text into stems', async () => {
-  const testTweet = new TopicTalker({ raw: 'The quick brown fox jumps over the lazy dog.'});
+  const testTweet = new TopicTools({ raw: 'The quick brown fox jumps over the lazy dog.'});
   const stems = await testTweet.getStems();
   expect(stems).toEqual(['quick', 'brown', 'fox', 'jump', 'lazi', 'dog']);
-})
+});
 
 test('should calc a compatability score', async () => {
   const other_words = ['one', 'run'];

@@ -1,6 +1,7 @@
 import Bot from './Bot';
 import config from './config';
-import TopicTalker from './Responsify/TopicTalker';
+import Library from './Brain/Responsifier';
+import TopicTools from './Brain/TopicTools';
 import { performance } from 'perf_hooks';
 
 const scubbles = new Bot('scubbles', config.scubblesbot);
@@ -18,9 +19,10 @@ const utahroger = new Bot('utahroger', config.utahroger);
 //   console.log('newest tweet id: ', data[0].id);
 // });
 
-const raw_tweet = "The quick brown fox jumps over the lazy dog";
-const x = new TopicTalker({raw: raw_tweet});
-x.fetchKeywords().then((a) => { console.log(a)});
+// const raw_tweet = "The quick brown fox jumps over the lazy dog";
+//const x = new TopicTools({raw: raw_tweet});
+
+// console.log(Library());
 
 // working bots
 // utahroger.streamTweeterTweets('twoheadlines', (tweet) => {
