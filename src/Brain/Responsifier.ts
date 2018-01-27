@@ -63,6 +63,9 @@ export default class Responsifier {
         match.topic = topic;
       }
     });
+    console.log('+++ Prompt words: ', prompt.keywords.join(' '));
+    console.log('+++ Match score: ', match.sim);
+    console.log('+++ Match topic: ', match.title);
    return { 
      sim: match.sim,
      topic: match.title,

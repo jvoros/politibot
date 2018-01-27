@@ -48,7 +48,7 @@ export default class {
   startStream(endpoint: IBot.StreamEndpoint, params: IBot.Params, callback: IBot.StreamCallback) {
     this.stream = this.twit.stream(endpoint, params);
     this.stream.on('tweet', (tweet) => {
-      console.log(`>>> Tweet received (${this.name}): ${tweet.created_at} by @${tweet.screen_name}`);
+      console.log(`>>> Tweet received (${this.name}): ${tweet.created_at} by @${tweet.user.screen_name}`);
       callback(tweet);
     });
     this.stream.on('connect', () => {
@@ -91,6 +91,14 @@ export default class {
     this.tweet(`${rt_slug}${new_status}`);
   }
 
+  reply(tweet: IBot.Twitter.Status, status: string): void {
+    const params = {
+      in_reply_to_status_id: tweet.id_str,
+      status: `@${tweet.user.screen_name} ${status}`
+    }
+    this.twit.post('statuses/update', params, this.tweetCallback.bind(this));
+  }
+
   // React to Users Funx
 
   streamTweetersTweets(screen_names: string[], callback: IBot.StreamCallback) {
@@ -109,6 +117,13 @@ export default class {
       console.log(`::: Received tweets from @${screen_name}`);
       callback(err, data, response);
     })
+  }
+
+  streamMentions(screen_name: string, callback: IBot.StreamCallback) {
+    const params = { track: `@${screen_name}`, tweet_mode: 'extended' };
+    const stream = this.startStream('statuses/filter', params, (tweet) => {
+      callback(tweet);
+    });
   }
 
 }
