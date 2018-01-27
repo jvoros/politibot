@@ -15,7 +15,7 @@ const t = new Topic(v, ['dog', 'cat'], ['how are you?', 'what up, bro?']);
 
 test('should initialize a vector for keywords', () => {
   
-  expect(t.getVector()).toEqual([2,4,6,8]);
+  expect(t.getVector()).toEqual([1,2,3,4]);
 });
 
 test('should get a random response', () => {

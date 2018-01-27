@@ -2,7 +2,6 @@ import config from '../config';
 import * as Library from '../Library';
 import Topic from './Topic';
 import * as Unirest from 'unirest';
-import w2v from './Vectorizer';
 import Vectorizer from './Vectorizer';
 
 export default class Responsifier {
@@ -17,6 +16,7 @@ export default class Responsifier {
       const topic = new Topic(vec, library[item].keywords, library[item].responses);
       this.topics[item] = topic;
     });
+    console.log('INTIALIZED Brain');
   }
 
   public keywords(phrase: string): Promise<string[]> {
@@ -48,7 +48,7 @@ export default class Responsifier {
   public async response(phrase: string) {
     const keywords = await this.keywords(phrase);
     // const keywords = phrase.split(' ');
-    const prompt= new Topic(this.vec, keywords);
+    const prompt = new Topic(this.vec, keywords);
     let match = {
       sim: 0,
       title: null,

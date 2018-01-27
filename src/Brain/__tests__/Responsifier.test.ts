@@ -50,7 +50,7 @@ const v = new Vectorizer('localhost');
 const r = new Responsifier(l, v);
 
 test('should initialize topics', () =>{
-  expect(r.topics.length).toEqual(2);
+  expect(Object.keys(r.topics).length).toEqual(2);
 });
 
 test('should fetch keywords for a phrase', async () => {
