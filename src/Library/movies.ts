@@ -2,7 +2,6 @@ const keywords = [
   'movies',
   'film',
   'movie',
-  'films',
   'popcorn',
   'blockbuster',
   'disney',

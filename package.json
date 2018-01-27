@@ -4,7 +4,7 @@
   "description": "A Twitter bot team trying to remind elected officials who they work for.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run frontail && npm run start:bot && pm2 logs",
+    "start": "npm run tsc && npm run frontail && npm run start:bot && pm2 logs",
     "start:bot": "pm2 start pm2.config.json --env production",
     "stop:bot": "pm2 delete pm2.config.json",
     "frontail": "frontail app.log -d --pid-path frontail.pid",
@@ -25,7 +25,6 @@
     "pm2": "^2.9.1",
     "twit": "^2.2.9",
     "unirest": "^0.5.1",
-    "word2vec": "^1.1.2",
     "word2vector": "^2.0.0"
   },
   "devDependencies": {

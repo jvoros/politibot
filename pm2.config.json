@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name"        : "mialovebot",
+    "name"        : "politibot",
     "script"      : "./index.js",
     "watch"       : false,
     "merge_logs"  : true,
