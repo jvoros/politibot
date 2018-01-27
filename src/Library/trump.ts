@@ -10,7 +10,13 @@ const keywords = [
   'business',
   'hotels',
   'reality tv',
-  'television'
+  'television',
+  'Donald Trump',
+  'Ivanka',
+  'Eric',
+  'Melania',
+  'gold',
+  'huge'
 ];
 
 const responses = [

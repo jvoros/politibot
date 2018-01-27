@@ -9,7 +9,7 @@ export default class Topic {
   constructor(w2v: Vectorizer, keywords: string[], responses?: string[] ) {
     this.keywords = keywords.join(' ').split(' ');
     this.responses = responses;
-    this.vector = w2v.addWords(...this.keywords);
+    this.vector = w2v.avgWords(...this.keywords);
   }
 
   getResponse() {

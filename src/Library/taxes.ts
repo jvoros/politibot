@@ -13,6 +13,7 @@ const keywords = [
   'interest',
   'estate',
   'jobs',
+  'rich',
 ];
 
 const responses = [

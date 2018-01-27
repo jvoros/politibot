@@ -24,6 +24,20 @@ export default class Vectorizer {
     return vecs.reduce((acc, cur) => w2v.add(acc, cur));
   }
 
+  public avgWords(...words: string[]): number[] {
+    let count = words.length;
+    const vecs = words.map(word => {
+      const vec = w2v.getVector(word);
+      if (vec === null) { 
+        count--;
+        return this.empty_vector;
+      }
+      return vec;
+    });
+    const sum = vecs.reduce((acc, cur) => w2v.add(acc, cur));
+    return sum.map(x => x/count);
+  }
+
   public similarity(word1: string | number[], word2: string | number[]): number {
     return w2v.similarity(word1, word2);
   }

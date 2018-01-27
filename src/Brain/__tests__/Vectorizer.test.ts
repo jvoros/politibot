@@ -28,6 +28,14 @@ test('should add word vectors even if word not found', () => {
   expect(v.addWords('dog', 'cat')).toEqual([1,2,3,4]);
 });
 
+test('should average word vectors even if word not found', () => {
+  w2v.getVector
+  .mockImplementationOnce(() => [1,2,3,4])
+  .mockImplementationOnce(() => null)
+  .mockImplementationOnce(() => [1,2,3,4]);
+  expect(v.avgWords('dog', 'cat', 'fish')).toEqual([1,2,3,4]);
+});
+
 test('should calculate similarities of vectors', () => {
   const sim = v.similarity(v.vectorize('dog'), v.vectorize('cat'));
   expect(sim).toEqual(0.75);

@@ -7,15 +7,15 @@ import Vectorizer from './Vectorizer';
 
 export default class Responsifier {
   
-  topics: Topic[];
+  topics: { [key: string]: Topic };
   vec: Vectorizer;
 
   constructor(library: Library, vec: Vectorizer) {
     this.vec = vec;
-    this.topics = [];
+    this.topics = {};
     Object.keys(library).forEach((item) => { 
       const topic = new Topic(vec, library[item].keywords, library[item].responses);
-      this.topics.push(topic);
+      this.topics[item] = topic;
     });
   }
 
@@ -47,20 +47,28 @@ export default class Responsifier {
 
   public async response(phrase: string) {
     const keywords = await this.keywords(phrase);
-    const prompt = new Topic(this.vec, keywords);
+    // const keywords = phrase.split(' ');
+    const prompt= new Topic(this.vec, keywords);
     let match = {
       sim: 0,
+      title: null,
       topic: null,
     }
-    this.topics.forEach((topic) => {
+    Object.keys(this.topics).forEach((key) => {
+      const topic = this.topics[key];
       const sim = this.vec.similarity(topic.getVector(), prompt.getVector());
       if (sim > match.sim) {
         match.sim = sim;
+        match.title = key;
         match.topic = topic;
-      };
+      }
     });
-    if ( match.sim < 5 ) return this.topics[0].getResponse();
-    return match.topic.getResponse();
+   return { 
+     sim: match.sim,
+     topic: match.title,
+     prompt_keywords: prompt.keywords,
+     resp:  (match.sim < 0.1) ? this.topics.def.getResponse() : match.topic.getResponse(),
+    };
   }
 
 }
