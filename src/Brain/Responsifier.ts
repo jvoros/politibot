@@ -1,10 +1,9 @@
-import * as stopword from 'stopword';
-import * as Unirest from 'unirest';
-import Vectorizer from './Vectorizer';
+import * as KeywordExtractor from 'keyword-extractor';
 
 import config from '../config';
 import * as Library from '../Library';
 import Topic from './Topic';
+import Vectorizer from './Vectorizer';
 
 export default class Responsifier {
   
@@ -22,56 +21,21 @@ export default class Responsifier {
     console.log('INTIALIZED Brain');
   }
 
-  public keywords(phrase: string): Promise<string[]> {
-    const body = {
-      documents: [{
-          language: 'en',
-          id: '1',
-          text: phrase
-        }]
-    }
-    
-    return new Promise<string[]>((resolve, reject) => {
-      const req = Unirest('POST', 'https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases');
-      req.headers({
-        'content-type': 'application/json',
-        'Ocp-Apim-Subscription-Key': config.azure.api_key
-      })
-      req.send(JSON.stringify(body))
-      req.end(resp => { 
-        if (resp.status === 200) {
-          resolve(resp.body.documents[0].keyPhrases.join(' ').split(' '));
-        } else {
-          reject(resp);
-        }
-      });
-    });
-  }
-
-  public setPrompt(tweet: TweetBits): Promise<boolean> {
+  public setPrompt(tweet: TweetBits): void {
     const { status, meta, user } = tweet;
-    return this.keywords(status)
-      .then(keywords_api => {
-        let keywords;
-        if (keywords_api.length > 2) {
-          keywords = keywords_api;
-        } else {
-          const no_stops = stopword.removeStopwords(status.split(' '));
-          keywords = no_stops.map((word) => word.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," "));
-        }
-
-        this.prompt = new Topic(this.vec, { keywords, meta });
-        return true;
-      })
-      .catch(err => { 
-        console.log('--- ERR: ', err);
-        return false;
-      });
+    const params = {
+      language:"english",
+      remove_digits: true,
+      return_changed_case: true,
+      remove_duplicates: false
+    };
+    const keywords = KeywordExtractor.extract(status, params);
+    this.prompt = new Topic(this.vec, { keywords, meta });
   }
 
-  public async response(tweet: TweetBits) {
-    const set = await this.setPrompt(tweet);
-    // const keywords = phrase.split(' ');
+  public response(tweet: TweetBits) {
+    this.setPrompt(tweet);
+    
     let match = {
       sim: 0,
       title: null,
@@ -107,7 +71,7 @@ export default class Responsifier {
      sim: match.sim,
      topic: match.title,
      prompt_keywords: this.prompt.keywords,
-     resp:  (match.sim < 0.1) ? this.topics.def.getResponse() : match.topic.getResponse(),
+     resp:  (match.sim < 0.11) ? this.topics.def.getResponse() : match.topic.getResponse(),
     };
   }
 
