@@ -10,9 +10,9 @@ const utahroger = new Bot('utahroger', config.utahroger);
 const brain = new Responsifier(Library, new Vectorizer(config.word2vectorModel.path));
 
 // Testing Bots
-scubbles.streamTweetersTweets(['rogerrogerbot'], (tweet) => {
-  console.log(scubbles.extractTweetBits(tweet));
-});
+// scubbles.streamTweetersTweets(['rogerrogerbot'], (tweet) => {
+//   console.log(scubbles.extractTweetBits(tweet));
+// });
 
 //scubbles.getUsersIds(['scubblesbot', 'utahroger']).then((x) => console.log(x));
 
@@ -21,11 +21,11 @@ scubbles.streamTweetersTweets(['rogerrogerbot'], (tweet) => {
 // });
 
 // Working Bots
-// utahroger.streamTweetersTweets(['twoheadlines'], (tweet) => {
-//   scubbles.oldSchoolRetweet(tweet) 
-// });
+utahroger.streamTweetersTweets(['twoheadlines'], (tweet) => {
+  scubbles.oldSchoolRetweet(tweet) 
+});
 
-// scubbles.streamMentions('scubblesbot', async (tweet) => {
-//   const reply = await brain.response(scubbles.extractTweetBits(tweet));
-//   scubbles.reply(tweet, reply.resp);
-// });
+scubbles.streamMentions('scubblesbot', async (tweet) => {
+  const reply = brain.response(scubbles.extractTweetBits(tweet));
+  scubbles.reply(tweet, reply.resp);
+});
