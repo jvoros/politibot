@@ -15,7 +15,7 @@ const l: Library = {
   one: {
     keywords: ['one', 'two', 'three'],
     responses: ['count 1', 'count 2', 'count 3'],
-    meta: ['counting']
+    meta: ['counting', 'numbers']
   },
   a: {
     keywords: ['a', 'b', 'c'],
@@ -24,7 +24,7 @@ const l: Library = {
 };
 
 const tweet: TweetBits = {
-  status: 'One two three four Magic counting for the win becuase numbers were removed',
+  status: 'Magic win counting',
   meta: ['counting'],
   user: 'scubblesbot'
 }
@@ -32,11 +32,18 @@ const tweet: TweetBits = {
 // TESTS
 const v = new Vectorizer('localhost');
 const r = new Responsifier(l, v);
+// const resp = r.response(tweet);
 
-test('should initialize topics', () =>{
+test('should initialize topics', () => {
   expect(Object.keys(r.topics).length).toEqual(2);
 });
 
+test('should initialize prompt property for tweet', () => {
+  w2v.similarity.mockImplementation(() => 0.2);
+  const resp = r.response(tweet);
+  expect(r.prompt.getKeywords()).toEqual(['magic', 'win', 'counting']);
+  expect(r.prompt.getMeta()).toEqual(['counting']);
+})
 
 test('should get responses based on similarity', () => {
   w2v.similarity
@@ -46,8 +53,7 @@ test('should get responses based on similarity', () => {
 });
 
 test('should boost score for meta matches', () => {
-  w2v.similarity.mockImplementation(() => 0.2);
-  const resp =  r.response(tweet);
-  expect(resp.sim).toEqual(0.4);
+  w2v.similarity.mockImplementation(() => 0.1);
+  const resp = r.response(tweet);
+  expect(resp.sim).toEqual(0.2);
 });
-

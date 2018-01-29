@@ -9,7 +9,7 @@ export default class Topic {
 
   constructor(w2v: Vectorizer, topic: TopicDef ) {
     if (topic.keywords) this.keywords = topic.keywords.join(' ').split(' ');
-    this.meta = topic.meta;
+    this.meta = (topic.meta) ? topic.meta : [];
     this.responses = topic.responses;
     this.vector = w2v.avgWords(...this.keywords);
   }

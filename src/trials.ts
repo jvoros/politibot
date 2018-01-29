@@ -18,6 +18,7 @@ const tests = [
   'Deron William and Gordon Hayward were both players who left the team.',
   'I did not do well on my organic chemistry final exam',
   '#botlife @scubblesbot this tweet has meta!!!',
+  '@scubblesbot what about @realDonaldTrump and Magic',
 ];
 
 tests.forEach((test) => {
@@ -30,7 +31,7 @@ tests.forEach((test) => {
 
   // console.log(kw.extract(test, params));
 
-  const resp = r.response({ status: test, meta: [], user: 'scubblesbot'});
+  const resp = r.response({ status: test, meta: ['scubblesbot', 'realdonaldtrump'], user: 'scubblesbot'});
     // console.log('score: ', resp.sim);
     // console.log('topic: ', resp.topic);
     // console.log('keywords: ', resp.prompt_keywords);

@@ -10,9 +10,11 @@ export default class Responsifier {
   prompt: Topic;
   topics: { [key: string]: Topic };
   vec: Vectorizer;
+  threshold: number;
 
   constructor(library: Library, vec: Vectorizer) {
     this.vec = vec;
+    this.threshold = 0.11;
     this.topics = {};
     Object.keys(library).forEach((item) => { 
       const topic = new Topic(vec, { keywords: library[item].keywords, meta: library[item].meta, responses: library[item].responses });
@@ -34,6 +36,8 @@ export default class Responsifier {
   }
 
   public response(tweet: TweetBits) {
+    console.log('xxx TweetBits: ', tweet);
+    
     this.setPrompt(tweet);
     
     let match = {
@@ -47,11 +51,11 @@ export default class Responsifier {
       const topic = this.topics[key];
       let sim = this.vec.similarity(topic.getVector(), this.prompt.getVector());
       
-      // add 0.2 to similarity result for every meta match
-      if (topic.getMeta().length > 0) { 
+      // add 0.1 to similarity result for every meta match if sim too low
+      if (sim === null || sim < this.threshold) {
         topic.meta.forEach(term => {
-          if (this.prompt.getMeta().includes(term)) {
-            sim = sim + 0.2;
+          if (this.prompt.getMeta().includes(term) && sim < this.threshold) {
+            sim = sim + 0.1;
           }
         });
       }
@@ -71,7 +75,7 @@ export default class Responsifier {
      sim: match.sim,
      topic: match.title,
      prompt_keywords: this.prompt.keywords,
-     resp:  (match.sim < 0.11) ? this.topics.def.getResponse() : match.topic.getResponse(),
+     resp: (match.sim < this.threshold) ? this.topics.def.getResponse() : match.topic.getResponse(),
     };
   }
 

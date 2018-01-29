@@ -11,6 +11,7 @@
     "tsc": "tsc",
     "test": "jest",
     "dev": "npm run tsc && node index.js",
+    "trials": "npm run tsc && node ./dist/trials.js",
     "dockerreup": "npm run dockerdown && npm run dockerup",
     "dockerdown": "docker stop politibot && docker rm -v politibot",
     "dockerup": "npm run dockerbuild && npm run dockerrun",

@@ -36,6 +36,14 @@ test('should average word vectors even if word not found', () => {
   expect(v.avgWords('dog', 'cat', 'fish')).toEqual([1,2,3,4]);
 });
 
+test('should return empty vector if none of the words are found', () => {
+  w2v.getVector
+  .mockImplementationOnce(() => null)
+  .mockImplementationOnce(() => null);
+  v.empty_vector = [0,0,0,0];
+  expect(v.avgWords('dog', 'cat')).toEqual([0,0,0,0]);
+}) 
+
 test('should calculate similarities of vectors', () => {
   const sim = v.similarity(v.vectorize('dog'), v.vectorize('cat'));
   expect(sim).toEqual(0.75);
