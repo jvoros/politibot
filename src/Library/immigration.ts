@@ -16,6 +16,12 @@ const keywords = [
   'shut down',
 ];
 
+const meta = [
+  'daca',
+  'dacadeal',
+  'dacadreamers'
+]
+
 const responses = [
   'I can talk about immigration',
   'Give me your tired, your poor, Your huddled masses yearning to breathe free',
@@ -23,5 +29,6 @@ const responses = [
 
 export const immigration: TopicDef = {
   keywords,
+  meta,
   responses
 }

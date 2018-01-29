@@ -16,10 +16,15 @@ export default class {
 
   // HELPERS
 
-  extractStatus(tweet: IBot.Twitter.Status) {
-    return tweet.truncated === true ? tweet.extended_tweet.full_text : tweet.text;
+  extractTweetBits(tweet: IBot.Twitter.Status): TweetBits {
+    const status = (tweet.truncated === true) ? tweet.extended_tweet.full_text : tweet.text;
+    const mentions = tweet.entities.user_mentions.map((mention) => mention.screen_name.toLowerCase());
+    const hashtags = tweet.entities.hashtags.map((tag) => tag.text.toLowerCase());
+    const meta = mentions.concat(hashtags);
+    const user = tweet.user.screen_name;
+    return { status, meta, user };
   }
-
+  
   tweetCallback(err: Error, data: IBot.Response) {
     if (err) {
       console.log(`--- ERROR (${this.name})`, err);
@@ -28,10 +33,6 @@ export default class {
     console.log(`+++ Status updated (${this.name})`);
     return data;
   }
-
-  // THE BUSINESS
-
-  // Utility Funx
 
   getUsersIdsString(users: string[], callback: IBot.GetUsersIdsStringCallback) {
     const users_array = Array.isArray(users) ? users : [users];
@@ -44,6 +45,8 @@ export default class {
         callback(err, result.map(u => u.id_str).join());
       });
   }
+
+  // THE BUSINESS
 
   startStream(endpoint: IBot.StreamEndpoint, params: IBot.Params, callback: IBot.StreamCallback) {
     this.stream = this.twit.stream(endpoint, params);
@@ -77,8 +80,8 @@ export default class {
   };
 
   oldSchoolRetweet(tweet: IBot.Twitter.Status): void {
-    const rt_slug = `RT @${tweet.user.screen_name}: `
-    const status = this.extractStatus(tweet);
+    const { status, user } = this.extractTweetBits(tweet);
+    const rt_slug = `RT @${user}: `
     const overage = status.length-(280-rt_slug.length);
     let new_status;
     if (overage > 0) {

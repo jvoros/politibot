@@ -16,6 +16,11 @@ const keywords = [
   'rich',
 ];
 
+const meta = [
+  'taxscam',
+  'taxreform'
+]
+
 const responses = [
   'I can talk about taxes',
   'Death and taxes and other stuff...',
@@ -23,5 +28,6 @@ const responses = [
 
 export const taxes: TopicDef = {
   keywords,
+  meta,
   responses
 }

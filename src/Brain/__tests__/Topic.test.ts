@@ -10,12 +10,19 @@ w2v.add.mockImplementation((a: number[], b: number[]) => {
 w2v.getVector.mockImplementation(() => [1, 2, 3, 4]);
 w2v.similarity.mockImplementation(() => 0.75);
 
-const v = new Vectorizer('localhost');
-const t = new Topic(v, ['dog', 'cat'], ['how are you?', 'what up, bro?']);
+const params = { 
+  keywords: ['dog', 'cat'],
+  meta: ['ilovepets'],
+  responses: ['how are you?', 'what up, bro?'] 
+};
+const t = new Topic(new Vectorizer('localhost'), params);
 
 test('should initialize a vector for keywords', () => {
-  
   expect(t.getVector()).toEqual([1,2,3,4]);
+});
+
+test('should initialize property for meta words', () => {
+  expect(t.getMeta()).toEqual(['ilovepets']);
 });
 
 test('should get a random response', () => {

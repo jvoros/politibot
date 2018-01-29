@@ -19,11 +19,17 @@ const keywords = [
   'huge'
 ];
 
+const meta = [
+  'realdonaldtrump',
+  'potus'
+]
+
 const responses = [
   "Mia Loves Trump!"
 ];
 
 export const trump: TopicDef = {
   keywords,
+  meta,
   responses
 }

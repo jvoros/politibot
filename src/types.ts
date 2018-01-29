@@ -3,7 +3,13 @@ interface Library {
 }
 
 interface TopicDef {
-  keywords: string[];
-  responses: string[];
+  keywords?: string[];
+  meta?: string[];
+  responses?: string[];
 }
 
+interface TweetBits {
+  status: string;
+  meta: string[];
+  user: string;
+}

@@ -28,11 +28,16 @@ const keywords = [
   'hustle'
 ];
 
+const meta = [
+  'gojazz'
+]
+
 const responses = [
   "Go Jazz!"
 ];
 
 export const utahsports: TopicDef = {
   keywords,
+  meta,
   responses
 }
