@@ -12,10 +12,10 @@
     "test": "jest",
     "dev": "npm run tsc && node index.js",
     "dockerreup": "npm run dockerdown && npm run dockerup",
-    "dockerdown": "docker stop politibot-alpha && docker rm politibot-alpha",
+    "dockerdown": "docker stop politibot && docker rm -v politibot",
     "dockerup": "npm run dockerbuild && npm run dockerrun",
-    "dockerbuild": "docker build --tag jvoros/politibot-alpha .",
-    "dockerrun": "docker run -d -p 80:9001 --name politibot-alpha jvoros/politibot-alpha"
+    "dockerbuild": "docker build --tag jvoros/politibot .",
+    "dockerrun": "docker run -d -p 80:9001 --name politibot -v /root/wordvectors:/usr/src/app/wordvectors jvoros/politibot"
   },
   "author": "Jeremy Voros",
   "license": "ISC",

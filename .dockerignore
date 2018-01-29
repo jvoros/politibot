@@ -1,4 +1,5 @@
 node_modules
+wordvectors/
 .git
 .gitignore
 .DS_Store
