@@ -25,7 +25,7 @@ utahroger.streamTweetersTweets(['twoheadlines'], (tweet) => {
   scubbles.oldSchoolRetweet(tweet) 
 });
 
-scubbles.streamMentions('scubblesbot', async (tweet) => {
+scubbles.streamMentions('scubblesbot', (tweet) => {
   const reply = brain.response(scubbles.extractTweetBits(tweet));
   scubbles.reply(tweet, reply.resp);
 });
