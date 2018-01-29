@@ -18,7 +18,7 @@ export default class Responsifier {
       const topic = new Topic(vec, { keywords: library[item].keywords, meta: library[item].meta, responses: library[item].responses });
       this.topics[item] = topic;
     });
-    console.log('INTIALIZED Brain');
+    console.log('INTIALIZED Brain...');
   }
 
   public setPrompt(tweet: TweetBits): void {
