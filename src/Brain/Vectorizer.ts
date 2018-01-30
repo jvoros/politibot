@@ -34,7 +34,7 @@ export default class Vectorizer {
       }
       return vec;
     });
-    if(count === 0) {
+    if (count === 0) {
       return this.empty_vector;
     } else {
       const sum = vecs.reduce((acc, cur) => w2v.add(acc, cur));

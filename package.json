@@ -1,6 +1,6 @@
 {
-  "name": "PolitiBot",
-  "version": "0.1.0",
+  "name": "politibot",
+  "version": "0.2.0",
   "description": "A Twitter bot team trying to remind elected officials who they work for.",
   "main": "index.js",
   "scripts": {
@@ -21,24 +21,21 @@
   "author": "Jeremy Voros",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^22.1.1",
+    "@types/node": "^9.4.0",
+    "@types/twit": "^2.2.11",
     "dotenv": "^4.0.0",
+    "eslint": "^4.16.0",
     "frontail": "^4.1.0",
+    "jest": "^22.1.4",
     "keyword-extractor": "0.0.15",
     "pm2": "^2.9.1",
-    "stopword": "^0.1.9",
+    "ts-jest": "^22.0.2",
     "twit": "^2.2.9",
-    "unirest": "^0.5.1",
+    "typescript": "^2.6.2",
     "word2vector": "^2.0.0"
   },
-  "devDependencies": {
-    "@types/jest": "^22.1.0",
-    "@types/node": "^9.3.0",
-    "@types/twit": "^2.2.10",
-    "eslint": "^4.15.0",
-    "jest": "^22.1.4",
-    "ts-jest": "^22.0.1",
-    "typescript": "^2.6.2"
-  },
+  "devDependencies": {},
   "jest": {
     "roots": [
       "<rootDir>/src"
