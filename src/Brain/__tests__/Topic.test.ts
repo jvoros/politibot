@@ -17,8 +17,11 @@ const params = {
 };
 const t = new Topic(new Vectorizer('localhost'), params);
 
-test('should have no keywords if none passed in', () => {
-
+test('should have empty arrays for empty params', () => {
+  const x = new Topic(new Vectorizer('localhost'), {});
+  expect(x.getKeywords()).toEqual([]);
+  expect(x.getMeta()).toEqual([]);
+  expect(x.responses).toEqual([]);
 });
 
 test('should initialize a vector for keywords', () => {

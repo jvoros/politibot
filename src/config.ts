@@ -18,18 +18,12 @@ export default {
     access_token: e.UR_ACCESS_TOKEN,
     access_token_secret: e.UR_ACCESS_TOKEN_SECRET,
   },
-  rogerrogerbot: {
-    id: e.RR_ID,
-  },
   miaworks4utah: {
     id: e.ML_ID,
     consumer_key: e.ML_CONSUMER_KEY,
     consumer_secret: e.ML_CONSUMER_SECRET,
     access_token: e.ML_ACCESS_TOKEN,
     access_token_secret: e.ML_ACCESS_TOKEN_SECRET,
-  },
-  azure: {
-    api_key: e.AZURE_API_KEY,
   },
   word2vectorModel: {
     path: path.join(__dirname, '../wordvectors/GoogleNews-vectors-negative300-SLIM.bin')

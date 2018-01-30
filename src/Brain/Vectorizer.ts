@@ -34,8 +34,13 @@ export default class Vectorizer {
       }
       return vec;
     });
-    const sum = vecs.reduce((acc, cur) => w2v.add(acc, cur));
-    return (count === 0) ? this.empty_vector : sum.map(x => x/count);
+    if(count === 0) {
+      return this.empty_vector;
+    } else {
+      const sum = vecs.reduce((acc, cur) => w2v.add(acc, cur));
+      return sum.map(x => x/count);
+    }
+    
   }
 
   public similarity(word1: string | number[], word2: string | number[]): number {
