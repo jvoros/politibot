@@ -16,7 +16,8 @@ const keywords = [
   'Eric',
   'Melania',
   'gold',
-  'huge'
+  'huge',
+  'white house',
 ];
 
 const meta = [
