@@ -29,7 +29,8 @@ const keywords = [
 ];
 
 const meta = [
-  'gojazz'
+  'gojazz',
+  'takenote'
 ]
 
 const responses = [
