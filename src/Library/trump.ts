@@ -25,7 +25,8 @@ const meta = [
 ]
 
 const responses = [
-  "Mia Loves Trump!"
+  "Mia Loves Trump!",
+  "CD4 doesn't love Trump--why does @MiaBLove work for him!"
 ];
 
 export const trump: TopicDef = {
