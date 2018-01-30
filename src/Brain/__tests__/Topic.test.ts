@@ -17,6 +17,10 @@ const params = {
 };
 const t = new Topic(new Vectorizer('localhost'), params);
 
+test('should have no keywords if none passed in', () => {
+
+});
+
 test('should initialize a vector for keywords', () => {
   expect(t.getVector()).toEqual([1,2,3,4]);
 });

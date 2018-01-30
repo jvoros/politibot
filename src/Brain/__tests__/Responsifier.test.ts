@@ -20,6 +20,10 @@ const l: Library = {
   a: {
     keywords: ['a', 'b', 'c'],
     responses: ['say a', 'say b', 'say c']
+  },
+  def: {
+    keywords: ['default'],
+    responses: ['default response'],
   }
 };
 
@@ -35,7 +39,7 @@ const r = new Responsifier(l, v);
 // const resp = r.response(tweet);
 
 test('should initialize topics', () => {
-  expect(Object.keys(r.topics).length).toEqual(2);
+  expect(Object.keys(r.topics).length).toEqual(3);
 });
 
 test('should initialize prompt property for tweet', () => {
@@ -48,7 +52,8 @@ test('should initialize prompt property for tweet', () => {
 test('should get responses based on similarity', () => {
   w2v.similarity
   .mockImplementationOnce(() => 0.2)
-  .mockImplementationOnce(() => 0.1);
+  .mockImplementationOnce(() => 0.1)
+  .mockImplementation(() => 0.2);
   expect(r.response(tweet).topic).toEqual('one');
 });
 
@@ -56,4 +61,10 @@ test('should boost score for meta matches', () => {
   w2v.similarity.mockImplementation(() => 0.1);
   const resp = r.response(tweet);
   expect(resp.sim).toEqual(0.2);
+});
+
+test('should trigger default for match below threshold', () => {
+  w2v.similarity.mockImplementation(() => 0);
+  const resp = r.response(tweet);
+  expect(resp.resp).toEqual('default response');
 });
