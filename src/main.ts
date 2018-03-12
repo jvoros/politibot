@@ -5,7 +5,7 @@ import Responsifier from './Brain/Responsifier';
 import Vectorizer from './Brain/Vectorizer'
 
 // Initialize Bots
-const scubbles = new Bot('scubbles', config.scubblesbot);
+// const scubbles = new Bot('scubbles', config.scubblesbot);
 const utahroger = new Bot('utahroger', config.utahroger);
 const repmiabot = new Bot('repmiabot', config.repmiabot);
 const brain = new Responsifier(Library, new Vectorizer(config.word2vectorModel.path));
