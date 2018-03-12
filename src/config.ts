@@ -18,7 +18,7 @@ export default {
     access_token: e.UR_ACCESS_TOKEN,
     access_token_secret: e.UR_ACCESS_TOKEN_SECRET,
   },
-  miaworks4utah: {
+  repmiabot: {
     id: e.ML_ID,
     consumer_key: e.ML_CONSUMER_KEY,
     consumer_secret: e.ML_CONSUMER_SECRET,

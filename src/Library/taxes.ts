@@ -1,19 +1,20 @@
 const keywords = [
-  'taxes',
   'tax',
-  'IRS',
+  'taxes',
+  'irs',
   'wealthy',
   'brackets',
-  'cut',
   'middle class',
-  'mortgage',
+  'middleclass',
   'deduction',
   'child credit',
-  'earned income',
+  'earned',
+  'income',
   'interest',
-  'estate',
-  'jobs',
   'rich',
+  'wealthy',
+  'stocks',
+  'mortgage',
 ];
 
 const meta = [
@@ -22,8 +23,10 @@ const meta = [
 ]
 
 const responses = [
-  'I can talk about taxes',
-  'Death and taxes and other stuff...',
+  '$RepMiaLove thinks tax breaks for the ultra-wealthy help real Utahns.',
+  '$RepMiaLove voted for a tax cut for Wall Street.',
+  '$realDonalTrump family got millions in tax relief. How much did you get?',
+  'How does your tax cut compare to your health insurance premium increase?',
 ];
 
 export const taxes: TopicDef = {
