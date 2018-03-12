@@ -15,9 +15,11 @@ const keywords = [
 ];
 
 const meta = [
+  '#daca',
+  '#dacadeal',
+  '#dacadreamers',
   'daca',
-  'dacadeal',
-  'dacadreamers'
+  'dreamers',
 ]
 
 const responses = [

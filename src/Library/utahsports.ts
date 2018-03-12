@@ -12,8 +12,6 @@ const keywords = [
   'real',
   'coach',
   'play',
-  'win',
-  'loss',
   'kick',
   'shot',
   'referee',
@@ -29,12 +27,13 @@ const keywords = [
 ];
 
 const meta = [
-  'gojazz',
-  'takenote'
+  '#gojazz',
+  '#takenote',
+  '@spidadmitchell'
 ]
 
 const responses = [
-  "Go Jazz!"
+  "Go Jazz! https://youtu.be/gtprpculjrQ"
 ];
 
 export const utahsports: TopicDef = {

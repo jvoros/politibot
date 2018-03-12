@@ -13,8 +13,8 @@ const keywords = [
 ];
 
 const meta = [
-  'realdonaldtrump',
-  'potus'
+  '@realdonaldtrump',
+  '@potus'
 ]
 
 const responses = [

@@ -33,6 +33,12 @@ const tweet: TweetBits = {
   user: 'scubblesbot'
 }
 
+const tweet2: TweetBits = {
+  status: 'medicine',
+  meta: [],
+  user: 'scubblesbot'
+}
+
 // TESTS
 const v = new Vectorizer('localhost');
 const r = new Responsifier(l, v);
@@ -58,13 +64,13 @@ test('should get responses based on similarity', () => {
 });
 
 test('should boost score for meta matches', () => {
-  w2v.similarity.mockImplementation(() => 0.1);
+  w2v.similarity.mockImplementation(() => 0.09);
   const resp = r.response(tweet);
-  expect(resp.sim).toEqual(0.2);
+  expect(resp.sim).toEqual(0.19);
 });
 
 test('should trigger default for match below threshold', () => {
   w2v.similarity.mockImplementation(() => 0);
-  const resp = r.response(tweet);
+  const resp = r.response(tweet2);
   expect(resp.resp).toEqual('default response');
 });

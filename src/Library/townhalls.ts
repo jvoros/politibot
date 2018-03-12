@@ -8,7 +8,10 @@ const keywords = [
   'phone',
 ];
 
-const meta = [];
+const meta = [
+  'townhall',
+  '#miahides',
+];
 
 const responses = [
   '$RepMiaLove forgot who she works for!',

@@ -14,7 +14,7 @@ export default class Responsifier {
 
   constructor(library: Library, vec: Vectorizer) {
     this.vec = vec;
-    this.threshold = 0.11;
+    this.threshold = 0.10;
     this.topics = {};
     Object.keys(library).forEach((item) => { 
       const topic = new Topic(vec, { keywords: library[item].keywords, meta: library[item].meta, responses: library[item].responses });
@@ -54,7 +54,8 @@ export default class Responsifier {
       // add 0.1 to similarity result for every meta match if sim too low
       if (sim === null || sim < this.threshold) {
         topic.meta.forEach(term => {
-          if (this.prompt.getMeta().includes(term) && sim < this.threshold) {
+          if (this.prompt.getMeta().includes(term)) {
+            console.log('+++ Meta Match:', term);
             sim = sim + 0.1;
           }
         });
