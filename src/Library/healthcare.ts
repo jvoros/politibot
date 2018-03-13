@@ -11,7 +11,8 @@ const keywords = [
 
 const meta = [
   'healthcare',
-  'trumpcare'
+  'trumpcare',
+  'ahca'
 ]
 
 const responses = [

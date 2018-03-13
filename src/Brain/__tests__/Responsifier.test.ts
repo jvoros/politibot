@@ -19,7 +19,8 @@ const l: Library = {
   },
   a: {
     keywords: ['a', 'b', 'c'],
-    responses: ['say a', 'say b', 'say c']
+    responses: ['say a', 'say b', 'say c'],
+    meta: ['alphabet']
   },
   def: {
     keywords: ['default'],
@@ -34,9 +35,15 @@ const tweet: TweetBits = {
 }
 
 const tweet2: TweetBits = {
-  status: 'medicine',
+  status: 'medicine alphabet',
   meta: [],
   user: 'scubblesbot'
+}
+
+const tweet3: TweetBits = {
+  status: 'medicine',
+  user: 'scubblesbot',
+  meta: []
 }
 
 // TESTS
@@ -65,12 +72,13 @@ test('should get responses based on similarity', () => {
 
 test('should boost score for meta matches', () => {
   w2v.similarity.mockImplementation(() => 0.09);
-  const resp = r.response(tweet);
+  const resp = r.response(tweet2);
   expect(resp.sim).toEqual(0.19);
+  expect(resp.topic).toEqual('a');
 });
 
 test('should trigger default for match below threshold', () => {
   w2v.similarity.mockImplementation(() => 0);
-  const resp = r.response(tweet2);
+  const resp = r.response(tweet3);
   expect(resp.resp).toEqual('default response');
 });

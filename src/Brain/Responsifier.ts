@@ -54,7 +54,7 @@ export default class Responsifier {
       // add 0.1 to similarity result for every meta match if sim too low
       if (sim === null || sim < this.threshold) {
         topic.meta.forEach(term => {
-          if (this.prompt.getMeta().includes(term)) {
+          if (this.prompt.getKeywords().includes(term)) {
             console.log('+++ Meta Match:', term);
             sim = sim + 0.1;
           }

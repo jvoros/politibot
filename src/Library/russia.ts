@@ -5,9 +5,17 @@ const keywords = [
   'interference',
   'election',
   'investigation',
+  'Moscow'
 ];
 
-const meta = []
+const meta = [
+  'putin',
+  'Putin',
+  'nunes',
+  'nunes',
+  '@repchrisstewart',
+  'Moscow'
+]
 
 const responses = [
   'Why won\'t $RepMiaLove protect our democracy from foreign attack?',
