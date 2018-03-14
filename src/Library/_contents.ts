@@ -7,4 +7,5 @@ export { movies } from './movies';
 export { russia } from './russia';
 export { townhalls } from './townhalls';
 export { healthcare } from './healthcare';
-// export { profanity } from './profanity';
+export { guns } from './guns';
+export { profanity } from './profanity';

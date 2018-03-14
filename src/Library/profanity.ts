@@ -1,7 +1,6 @@
 const keywords = [
   'fuck',
   'asshole',
-  'shit',
   'cunt',
   'pussy',
   'bitch'
