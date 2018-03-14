@@ -1,29 +1,18 @@
 import * as KeywordExtractor from 'keyword-extractor';
 
-import config from '../config';
-import * as Library from '../Library';
-import Topic from './Topic';
-import Vectorizer from './Vectorizer';
-
-export default class Responsifier {
+export default class {
   
-  prompt: Topic;
-  topics: { [key: string]: Topic };
-  vec: Vectorizer;
-  threshold: number;
+  prompt: { keywords:string[], meta: string[], user: string, status: string };
+  topics: { [key: string]: TopicDef };
+  ps: string;
 
-  constructor(library: Library, vec: Vectorizer) {
-    this.vec = vec;
-    this.threshold = 0.10;
-    this.topics = {};
-    Object.keys(library).forEach((item) => { 
-      const topic = new Topic(vec, { keywords: library[item].keywords, meta: library[item].meta, responses: library[item].responses });
-      this.topics[item] = topic;
-    });
+  constructor(library: Library, ps: string) {
+    this.topics = library;
+    this.ps = ps;
     console.log('INTIALIZED Brain...');
   }
 
-  public setPrompt(tweet: TweetBits): void {
+  private setPrompt(tweet: TweetBits): void {
     const { status, meta, user } = tweet;
     const params = {
       language:"english",
@@ -31,52 +20,46 @@ export default class Responsifier {
       return_changed_case: true,
       remove_duplicates: false
     };
-    const keywords = KeywordExtractor.extract(status, params);
-    this.prompt = new Topic(this.vec, { keywords, meta });
+    const keywords = KeywordExtractor.extract(status.toLowerCase(), params);
+    this.prompt = { keywords, meta, user, status }
   }
 
-  public response(tweet: TweetBits) {
+  public overlap(a: string[], b: string[]): string[] {
+    return a.filter(x => b.indexOf(x) > -1);
+  } 
+
+  private getResponse(topic: TopicDef) {
+    const r = topic.responses[Math.floor(Math.random()*topic.responses.length)];
+    return r.concat(this.ps);
+  }
+
+  public respond(tweet: TweetBits) {
     console.log('xxx TweetBits: ', tweet);
-    
     this.setPrompt(tweet);
     
     let match = {
-      sim: 0,
-      title: null,
-      topic: null,
+      score: 0,
+      key: null
     }
 
     // compare topics to prompt
     Object.keys(this.topics).forEach((key) => {
       const topic = this.topics[key];
-      let sim = this.vec.similarity(topic.getVector(), this.prompt.getVector());
-      
-      // add 0.1 to similarity result for every meta match if sim too low
-      if (sim === null || sim < this.threshold) {
-        topic.meta.forEach(term => {
-          if (this.prompt.getKeywords().includes(term)) {
-            console.log('+++ Meta Match:', term);
-            sim = sim + 0.1;
-          }
-        });
-      }
-      
-      if (sim > match.sim) {
-        match.sim = sim;
-        match.title = key;
-        match.topic = topic;
+      const score = this.overlap(this.prompt.keywords, topic.keywords).length;
+      if (score > match.score) {
+        match = { score, key }
       }
     });
     
     console.log('+++ Prompt words: ', this.prompt.keywords.join(' '));
-    console.log('+++ Match score: ', match.sim);
-    console.log('+++ Match topic: ', match.title);
+    console.log('+++ Match score: ', match.score);
+    console.log('+++ Match topic: ', match.key);
    
     return { 
-     sim: match.sim,
-     topic: match.title,
+     score: match.score,
+     topic: match.key,
      prompt_keywords: this.prompt.keywords,
-     resp: (match.sim < this.threshold) ? this.topics.def.getResponse() : match.topic.getResponse(),
+     response: (match.score < 1) ? this.getResponse(this.topics.def) : this.getResponse(this.topics[match.key])
     };
   }
 

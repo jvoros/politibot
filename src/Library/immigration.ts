@@ -5,22 +5,22 @@ const keywords = [
   'emigration',
   'border',
   'wall',
+  'immigrant',
+  'immigrants',
   'mexico',
   'shithole',
   'shit hole',
   'dreamer',
+  'dreamers',
   'illegal',
+  'alien',
+  'aliens',
+  'illegals',
   'migrant',
   'undocumented',
-];
-
-const meta = [
   '#daca',
   '#dacadeal',
-  '#dacadreamers',
-  'daca',
-  'dreamers',
-]
+];
 
 const responses = [
   'The Statue of Liberty proclaims to the world "Give me your tired, your poor, your huddled masses yearning to breathe free". Why can\'t $RepMiaLove? https://www.nps.gov/stli/learn/historyculture/colossus.htm',
@@ -29,6 +29,5 @@ const responses = [
 
 export const immigration: TopicDef = {
   keywords,
-  meta,
   responses
 }

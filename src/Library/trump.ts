@@ -10,12 +10,10 @@ const keywords = [
   'genius',
   'television',
   'reality tv',
-];
-
-const meta = [
   '@realdonaldtrump',
-  '@potus'
-]
+  '@potus',
+  'potus'
+];
 
 const responses = [
   "Mia Loves Trump!",
@@ -25,6 +23,5 @@ const responses = [
 
 export const trump: TopicDef = {
   keywords,
-  meta,
   responses
 }

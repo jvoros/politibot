@@ -1,12 +1,11 @@
 import * as kw from 'keyword-extractor';
 
 import config from './config';
-import * as Library from './Library';
-import Responsifier from './Brain/Responsifier';
-import Vectorizer from './Brain/Vectorizer'
+import { library } from './Library';
 
-const v = new Vectorizer(config.word2vectorModel.path);
-const r = new Responsifier(Library, v);
+import Responsifier from './Brain/Responsifier';
+
+const r = new Responsifier(library, '#dummy');
 
 const tests = [
   'Karl malone and john stockton69 in 1969',
@@ -22,21 +21,18 @@ const tests = [
 ];
 
 tests.forEach((test) => {
-  // const params = {
-  //   language:"english",
-  //   remove_digits: true,
-  //   return_changed_case:true,
-  //   remove_duplicates: false
-  // };
+  const params = {
+    language:"english",
+    remove_digits: true,
+    return_changed_case:true,
+    remove_duplicates: false
+  };
 
-  // console.log(kw.extract(test, params));
+  console.log(kw.extract(test, params));
 
-  const resp = r.response({ status: test, meta: ['scubblesbot', 'realdonaldtrump'], user: 'scubblesbot'});
+  const resp = r.respond({ status: test, meta: ['scubblesbot', 'realdonaldtrump'], user: 'scubblesbot'});
     // console.log('score: ', resp.sim);
     // console.log('topic: ', resp.topic);
     // console.log('keywords: ', resp.prompt_keywords);
-  console.log('resp: ', resp.resp);
+  console.log('resp: ', resp.response);
 });
-
-console.log('@realDonaldTrump', v.vectorize('@realDonaldTrump'));
-console.log('#botlife', v.vectorize('#botlife'));

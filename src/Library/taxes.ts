@@ -15,12 +15,9 @@ const keywords = [
   'wealthy',
   'stocks',
   'mortgage',
-];
-
-const meta = [
   '#taxscam',
   '#taxreform'
-]
+];
 
 const responses = [
   '$RepMiaLove thinks tax breaks for the ultra-wealthy help real Utahns.',
@@ -31,6 +28,5 @@ const responses = [
 
 export const taxes: TopicDef = {
   keywords,
-  meta,
   responses
 }

@@ -1,6 +1,7 @@
 import * as Twit from 'twit';
 import * as IBot from './_types';
 import { IncomingMessage } from 'http';
+import * as fs from 'fs';
 
 export default class {
   
@@ -125,7 +126,19 @@ export default class {
   streamMentions(screen_name: string, callback: IBot.StreamCallback) {
     const params = { track: `@${screen_name}`, tweet_mode: 'extended' };
     const stream = this.startStream('statuses/filter', params, (tweet) => {
-      callback(tweet);
+      if(
+        tweet.in_reply_to_status_id != null ||
+        tweet.hasOwnProperty('retweeted_status') ||
+        tweet.hasOwnProperty('quoted_status_id')
+      ) {
+        console.log('xxx Reply, retweet or quote.');
+      } else {
+        // needs to be better, error check etc...
+        this.twit.post('friendships/create', { screen_name: tweet.user.screen_name }, (err, data, response) => {
+          console.log('::: Followed @', tweet.user.screen_name);
+        });
+        callback(tweet);
+      }
     });
   }
 

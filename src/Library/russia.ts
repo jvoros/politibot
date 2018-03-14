@@ -5,17 +5,11 @@ const keywords = [
   'interference',
   'election',
   'investigation',
-  'Moscow'
-];
-
-const meta = [
-  'putin',
+  'Moscow',
   'Putin',
-  'nunes',
-  'nunes',
   '@repchrisstewart',
-  'Moscow'
-]
+  'nunes'
+];
 
 const responses = [
   'Why won\'t $RepMiaLove protect our democracy from foreign attack?',
@@ -25,6 +19,5 @@ const responses = [
 
 export const russia: TopicDef = {
   keywords,
-  meta,
   responses
 }

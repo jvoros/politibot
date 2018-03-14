@@ -6,11 +6,7 @@ const keywords = [
   'work',
   'telephone',
   'phone',
-];
-
-const meta = [
-  'townhall',
-  '#miahides',
+  '#miahides'
 ];
 
 const responses = [
@@ -23,6 +19,5 @@ const responses = [
 
 export const townhalls: TopicDef = {
   keywords,
-  meta,
   responses
 }

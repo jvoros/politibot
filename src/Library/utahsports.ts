@@ -4,16 +4,10 @@ const keywords = [
   'soccer',
   'Utah Jazz',
   'Utes',
-  'college',
-  'BYU',
-  'Brigham Young University',
+  'cougars',
   'cheer',
   'points',
-  'real',
   'coach',
-  'play',
-  'kick',
-  'shot',
   'referee',
   'ball',
   'defense',
@@ -23,14 +17,11 @@ const keywords = [
   'quarter',
   'halftime',
   'championship',
-  'hustle'
-];
-
-const meta = [
+  'hustle',
   '#gojazz',
   '#takenote',
   '@spidadmitchell'
-]
+];
 
 const responses = [
   "Go Jazz! https://youtu.be/gtprpculjrQ"
@@ -38,6 +29,5 @@ const responses = [
 
 export const utahsports: TopicDef = {
   keywords,
-  meta,
   responses
 }
