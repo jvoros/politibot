@@ -2,7 +2,6 @@ import * as KeywordExtractor from 'keyword-extractor';
 
 export default class {
   
-  prompt: { keywords:string[], meta: string[], user: string, status: string };
   topics: { [key: string]: TopicDef };
   ps: string;
 
@@ -12,54 +11,52 @@ export default class {
     console.log('INTIALIZED Brain...');
   }
 
-  private setPrompt(tweet: TweetBits): void {
-    const { status, meta, user } = tweet;
+  getKeywords(tweet: TweetBits): string[] {
     const params = {
       language:"english",
       remove_digits: true,
       return_changed_case: true,
       remove_duplicates: false
     };
-    const keywords = KeywordExtractor.extract(status.toLowerCase(), params);
-    this.prompt = { keywords, meta, user, status }
+    return KeywordExtractor.extract(tweet.status.toLowerCase(), params);
   }
 
-  public overlap(a: string[], b: string[]): string[] {
-    return a.filter(x => b.indexOf(x) > -1);
-  } 
-
-  private getResponse(topic: TopicDef) {
-    const r = topic.responses[Math.floor(Math.random()*topic.responses.length)];
-    return r.concat(this.ps);
+  overlapScore(a: string[], b: string[]): number {
+    return a.filter(x => b.indexOf(x) > -1).length;
   }
 
-  public respond(tweet: TweetBits) {
-    console.log('xxx TweetBits: ', tweet);
-    this.setPrompt(tweet);
-    
-    let match = {
-      score: 0,
-      key: null
-    }
-
-    // compare topics to prompt
+  topicMatch(a: string[]): { score: number, key: string | null } {
+    let match = { score: 0, key: null }
     Object.keys(this.topics).forEach((key) => {
-      const topic = this.topics[key];
-      const score = this.overlap(this.prompt.keywords, topic.keywords).length;
+      const score = this.overlapScore(a, this.topics[key].keywords);
       if (score > match.score) {
         match = { score, key }
       }
+      if (score > 0 && score === match.score) {
+        match = { score, key: [key, match.key][Math.floor(Math.random()*2)]}
+      }
     });
+    return match;
+  }
+
+  getRandomResponse(topic: TopicDef) {
+    const r = topic.responses[Math.floor(Math.random()*topic.responses.length)];
+    return r.concat(` ${this.ps}`);
+  }
+
+  respond(tweet: TweetBits) {
+    const prompt = this.getKeywords(tweet);
+    const match = this.topicMatch(prompt);
     
-    console.log('+++ Prompt words: ', this.prompt.keywords.join(' '));
-    console.log('+++ Match score: ', match.score);
-    console.log('+++ Match topic: ', match.key);
+    console.log('xxx TweetBits: ', tweet);
+    console.log('+++ Prompt words: ', prompt.join(' '));
+    console.log('+++ Match: ', match.score, match.key);
    
     return { 
      score: match.score,
      topic: match.key,
-     prompt_keywords: this.prompt.keywords,
-     response: (match.score < 1) ? this.getResponse(this.topics.def) : this.getResponse(this.topics[match.key])
+     prompt_keywords: prompt,
+     response: (match.score === 0) ? this.getRandomResponse(this.topics.def) : this.getRandomResponse(this.topics[match.key])
     };
   }
 
